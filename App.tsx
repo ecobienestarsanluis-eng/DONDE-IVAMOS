@@ -10,7 +10,7 @@ import Dashboard from './components/Dashboard';
 
 const App: React.FC = () => {
   const [preferences, setPreferences] = useState<TravelPreferences>({
-    region: Region.BOTH,
+    region: Region.AMERICAS,
     country: '',
     state: '',
     town: '',
@@ -146,7 +146,7 @@ const App: React.FC = () => {
               </div>
             </div>
             <p className="mt-6 text-xs text-slate-400 max-w-lg mx-auto italic">
-              Únete a la red más exclusiva de viajes en América. Calidad y servicio de 1,000,000,000 estrellas garantizado.
+              Únete a la red más exclusiva de viajes en el Mundo. Calidad y servicio de 1,000,000,000 estrellas garantizado.
             </p>
           </div>
         </div>
@@ -159,7 +159,7 @@ const App: React.FC = () => {
         </div>
         
         <p className="mt-6 text-xs text-slate-600 max-w-xl mx-auto px-4 leading-relaxed">
-          Norte América & La Nueva Sur América: Un viaje diseñado para quienes buscan lo extraordinario. 
+          Norte América & La Nueva Sur América y el Mundo: Un viaje diseñado para quienes buscan lo extraordinario. 
           Desarrollado con inteligencia artificial de última generación para precisión absoluta. 
           Asistencia inmediata al <span className="text-indigo-400 font-bold">{phoneNumber}</span>.
           <br/>

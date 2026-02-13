@@ -12,14 +12,12 @@ export interface ItineraryResponse {
 }
 
 export enum Region {
-  NORTH_AMERICA = 'Norteamérica',
-  SOUTH_AMERICA = 'Suramérica',
-  EUROPE = 'Europa',
+  AMERICAS = 'Americas',
+  EUROPE = 'Europe',
   ASIA = 'Asia',
-  AFRICA = 'África',
-  OCEANIA = 'Oceanía',
-  MIDDLE_EAST = 'Medio Oriente',
-  BOTH_AMERICAS = 'Ambas Américas'
+  AFRICA = 'Africa',
+  OCEANIA = 'Oceania',
+  ANTARCTIC = 'Antarctic'
 }
 
 export interface TravelPreferences {

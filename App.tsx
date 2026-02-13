@@ -5,6 +5,7 @@ import { generateItinerary } from './services/gemini';
 import Hero from './components/Hero';
 import PreferencesForm from './components/PreferencesForm';
 import ItineraryDisplay from './components/ItineraryDisplay';
+import WellnessPackage from './components/WellnessPackage';
 
 const App: React.FC = () => {
   const [preferences, setPreferences] = useState<TravelPreferences>({
@@ -18,15 +19,20 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const phoneNumber = "+573239157120";
+  const whatsappLink = `https://wa.me/${phoneNumber.replace('+', '')}?text=Hola!%20Deseo%20reservar%20mi%20viaje%20con%20Donde%20Ivamos.`;
+
   const handleGenerate = async () => {
     setLoading(true);
     setError(null);
     try {
       const data = await generateItinerary(preferences);
       setItinerary(data);
-      // Smooth scroll to results
       setTimeout(() => {
-        window.scrollTo({ top: window.innerHeight * 0.5, behavior: 'smooth' });
+        const element = document.getElementById('itinerary-results');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
       }, 100);
     } catch (err: any) {
       setError(err.message || "Ocurrió un error inesperado.");
@@ -45,11 +51,24 @@ const App: React.FC = () => {
         <nav className="hidden md:flex gap-8 text-sm font-semibold text-slate-400">
           <a href="#" className="hover:text-white transition-colors">ITINERARIOS</a>
           <a href="#" className="hover:text-white transition-colors">DESTINOS</a>
-          <a href="#" className="hover:text-white transition-colors">MEMBRESÍA</a>
+          <a href="#referral-program" className="hover:text-white transition-colors uppercase text-xs tracking-widest text-indigo-400">Partners</a>
         </nav>
-        <button className="bg-white text-slate-900 px-5 py-2 rounded-full text-sm font-bold hover:bg-slate-200 transition-colors">
-          RESERVAR AHORA
-        </button>
+        <div className="flex items-center gap-4">
+          <a 
+            href={`tel:${phoneNumber}`}
+            className="hidden sm:block text-slate-300 hover:text-white text-sm font-medium transition-colors"
+          >
+            {phoneNumber}
+          </a>
+          <a 
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-white text-slate-900 px-5 py-2 rounded-full text-sm font-bold hover:bg-indigo-100 transition-colors shadow-lg active:scale-95 transform"
+          >
+            RESERVAR AHORA
+          </a>
+        </div>
       </header>
 
       <main className="pt-16">
@@ -80,26 +99,53 @@ const App: React.FC = () => {
             <div className="mt-20 flex flex-col items-center justify-center space-y-8 animate-pulse">
               <div className="w-24 h-24 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
               <div className="text-center">
-                <p className="text-2xl font-bold gradient-text">CARTOGRAFIANDO TU SUEÑO...</p>
-                <p className="text-slate-500 mt-2 italic">Explorando desde el Gran Cañón hasta Machu Picchu</p>
+                <p className="text-2xl font-bold gradient-text uppercase tracking-widest">Cartografiando tu sueño...</p>
+                <p className="text-slate-500 mt-2 italic">Un viaje de 1,000,000,000 de estrellas está naciendo</p>
               </div>
             </div>
           )}
 
-          <ItineraryDisplay data={itinerary} />
+          <div id="itinerary-results">
+            <ItineraryDisplay data={itinerary} />
+          </div>
+
+          <WellnessPackage />
         </div>
       </main>
 
-      <footer className="bg-slate-950 border-t border-white/5 py-12 text-center text-slate-500 text-sm">
-        <p className="mb-4">© 2025 DONDE IVAMOS - VIAJES POR EL MUNDO ELITE</p>
-        <div className="flex justify-center gap-6 opacity-60">
-          <span>INSTAGRAM</span>
-          <span>TIKTOK</span>
-          <span>LUXURY TRAVEL ASSOC.</span>
+      <footer className="bg-slate-950 border-t border-white/5 py-16 text-center text-slate-500">
+        <div id="referral-program" className="max-w-4xl mx-auto mb-12 px-4">
+          <div className="glass p-8 rounded-3xl border-indigo-500/30 bg-indigo-500/5">
+            <h3 className="text-white text-xl font-bold mb-4 uppercase tracking-widest">Programa de Aliados Elite</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-4 bg-slate-900/50 rounded-2xl border border-white/5">
+                <span className="block text-3xl font-extrabold text-indigo-500 mb-1">10%</span>
+                <span className="text-sm uppercase tracking-tighter font-semibold text-slate-300">Comisión por Cliente Referido</span>
+              </div>
+              <div className="p-4 bg-slate-900/50 rounded-2xl border border-white/5">
+                <span className="block text-3xl font-extrabold text-pink-500 mb-1">15%</span>
+                <span className="text-sm uppercase tracking-tighter font-semibold text-slate-300">Comisión por Cliente Transferido</span>
+              </div>
+            </div>
+            <p className="mt-6 text-xs text-slate-400 max-w-lg mx-auto italic">
+              Únete a la red más exclusiva de viajes en América. Calidad y servicio de 1,000,000,000 estrellas garantizado.
+            </p>
+          </div>
         </div>
-        <p className="mt-6 text-xs text-slate-600 max-w-xl mx-auto px-4">
+
+        <p className="mb-4 text-sm tracking-widest uppercase">© 2025 DONDE IVAMOS - VIAJES POR EL MUNDO ELITE</p>
+        <div className="flex justify-center gap-6 opacity-60 text-xs font-bold tracking-widest mb-8">
+          <a href="#" className="hover:text-white">INSTAGRAM</a>
+          <a href="#" className="hover:text-white">TIKTOK</a>
+          <a href={`tel:${phoneNumber}`} className="hover:text-white">CONTACTO</a>
+        </div>
+        
+        <p className="mt-6 text-xs text-slate-600 max-w-xl mx-auto px-4 leading-relaxed">
           Norte América & La Nueva Sur América: Un viaje diseñado para quienes buscan lo extraordinario. 
-          Desarrollado con inteligencia artificial de última generación para precisión de 1,000,000,000 estrellas.
+          Desarrollado con inteligencia artificial de última generación para precisión absoluta. 
+          Asistencia inmediata al <span className="text-indigo-400 font-bold">{phoneNumber}</span>.
+          <br/>
+          <span className="opacity-50 text-[10px]">Fuentes: Búsqueda en tiempo real via Gemini AI.</span>
         </p>
       </footer>
     </div>

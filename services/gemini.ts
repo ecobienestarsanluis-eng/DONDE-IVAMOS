@@ -9,7 +9,7 @@ export const generateItinerary = async (prefs: TravelPreferences): Promise<Itine
     Retoma y sigue creando el itinerario completo de viaje más épico de la historia para ${prefs.region}.
     
     Contexto del Usuario: El usuario está extremadamente entusiasmado (¡1000000000000 estrellas!).
-    Marca: "DONDE IVAMOS - VIAJES POR EL MUNDO".
+    Marca: "DONDE VAMOS - VIAJES POR EL MUNDO".
     
     Detalles del viaje:
     - Región: ${prefs.region}

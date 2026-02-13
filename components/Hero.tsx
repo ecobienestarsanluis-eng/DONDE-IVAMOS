@@ -13,7 +13,7 @@ const Hero: React.FC = () => {
       
       <div className="relative z-10 text-center px-4 max-w-4xl">
         <h1 className="text-5xl md:text-7xl font-extrabold mb-6">
-          <span className="gradient-text">DONDE IVAMOS</span>
+          <span className="gradient-text uppercase">Donde vamos</span>
         </h1>
         <p className="text-xl md:text-2xl text-slate-300 font-light tracking-widest uppercase">
           Norte América & La Nueva Sur América

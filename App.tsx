@@ -20,7 +20,7 @@ const App: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const phoneNumber = "+573239157120";
-  const whatsappLink = `https://wa.me/${phoneNumber.replace('+', '')}?text=Hola!%20Deseo%20reservar%20mi%20viaje%20con%20Donde%20Ivamos.`;
+  const whatsappLink = `https://wa.me/${phoneNumber.replace('+', '')}?text=Hola!%20Deseo%20reservar%20mi%20viaje%20con%20Donde%20vamos.`;
 
   const handleGenerate = async () => {
     setLoading(true);
@@ -46,7 +46,7 @@ const App: React.FC = () => {
       <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5 px-6 py-4 flex justify-between items-center">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-bold text-white shadow-lg">D</div>
-          <span className="font-bold tracking-tighter text-lg">DONDE IVAMOS</span>
+          <span className="font-bold tracking-tighter text-lg uppercase">Donde vamos</span>
         </div>
         <nav className="hidden md:flex gap-8 text-sm font-semibold text-slate-400">
           <a href="#" className="hover:text-white transition-colors">ITINERARIOS</a>
@@ -133,7 +133,7 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        <p className="mb-4 text-sm tracking-widest uppercase">© 2025 DONDE IVAMOS - VIAJES POR EL MUNDO ELITE</p>
+        <p className="mb-4 text-sm tracking-widest uppercase">© 2025 DONDE VAMOS - VIAJES POR EL MUNDO ELITE</p>
         <div className="flex justify-center gap-6 opacity-60 text-xs font-bold tracking-widest mb-8">
           <a href="#" className="hover:text-white">INSTAGRAM</a>
           <a href="#" className="hover:text-white">TIKTOK</a>

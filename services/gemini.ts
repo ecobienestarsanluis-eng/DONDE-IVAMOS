@@ -5,27 +5,36 @@ import { ItineraryResponse, TravelPreferences } from "../types";
 export const generateItinerary = async (prefs: TravelPreferences): Promise<ItineraryResponse> => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
+  const locationContext = [
+    prefs.town && `Pueblo/Ciudad: ${prefs.town}`,
+    prefs.state && `Estado/Departamento: ${prefs.state}`,
+    prefs.country && `País: ${prefs.country}`,
+    `Región: ${prefs.region}`
+  ].filter(Boolean).join(', ');
+
   const prompt = `
-    Retoma y sigue creando el itinerario completo de viaje más épico de la historia para ${prefs.region}.
+    Eres el experto mundial en viajes de ultra-lujo de "DONDE VAMOS - VIAJES POR EL MUNDO".
+    Tu misión es crear el itinerario completo más épico de la historia para un destino GLOBAL.
     
-    Contexto del Usuario: El usuario está extremadamente entusiasmado (¡1000000000000 estrellas!).
-    Marca: "DONDE VAMOS - VIAJES POR EL MUNDO".
+    UBICACIÓN OBJETIVO: ${locationContext}
     
-    Detalles del viaje:
-    - Región: ${prefs.region}
-    - Duración estimada: ${prefs.duration} días
-    - Estilo de viaje: ${prefs.style}
+    CONTEXTO DEL SERVICIO:
+    - Experiencia de 1,000,000,000 estrellas.
+    - Duración: ${prefs.duration} días.
+    - Estilo: ${prefs.style} (Lujo, Aventura, Cultura o Gourmet).
     
-    Requisitos del contenido:
-    1. Incluye destinos icónicos y joyas ocultas de Norte América y la Nueva Sudamérica.
-    2. Divide el itinerario por zonas geográficas (e.g., Costa Este, Los Andes, El Caribe, Patagonia, etc.).
-    3. Para cada parada, sugiere:
-       - Un hotel de ultralujo o experiencia única.
-       - Un plato típico imperdible.
-       - Una actividad de aventura o cultura profunda.
-    4. Usa un tono de voz profesional pero vibrante, lleno de energía y lujo.
-    5. Utiliza Markdown para estructurar la respuesta con encabezados elegantes.
-    6. Asegúrate de incluir datos actualizados de eventos o aperturas recientes usando búsqueda en Google.
+    ESTRUCTURA OBLIGATORIA DEL RESULTADO:
+    1. INTRODUCCIÓN: Un texto poético y vibrante sobre por qué este rincón del mundo es único.
+    2. LOGÍSTICA DE ÉLITE: Cómo llegar y moverse con estilo.
+    3. ITINERARIO DÍA A DÍA: 
+       - 🏨 HOSPEDAJE: El hotel, villa o resort más icónico y exclusivo del lugar.
+       - 🍽️ RITUAL GASTRONÓMICO: Restaurantes con estrellas o experiencias culinarias secretas.
+       - ⛰️ ACTIVIDAD MEMORABLE: Experiencias que el dinero apenas puede comprar.
+    4. "EL SECRETO MEJOR GUARDADO": Un lugar o actividad en ${prefs.state || prefs.country} que casi nadie conoce.
+    
+    TONO: Ceremonial, sofisticado, experto y emocionante.
+    FORMATO: Markdown elegante con emojis y encabezados claros.
+    BÚSQUEDA: Utiliza herramientas de búsqueda para confirmar que los sitios existen y están abiertos en 2025.
   `;
 
   try {
@@ -38,7 +47,7 @@ export const generateItinerary = async (prefs: TravelPreferences): Promise<Itine
       },
     });
 
-    const content = response.text || "Lo sentimos, no pudimos generar el itinerario en este momento.";
+    const content = response.text || "Lo sentimos, el mapa estelar no pudo cargarse. Intenta de nuevo.";
     const sources = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
 
     return {
@@ -47,6 +56,6 @@ export const generateItinerary = async (prefs: TravelPreferences): Promise<Itine
     };
   } catch (error) {
     console.error("Gemini API Error:", error);
-    throw new Error("Error conectando con los servicios de viaje.");
+    throw new Error("La red global de inteligencia está saturada. Reintenta en unos segundos.");
   }
 };

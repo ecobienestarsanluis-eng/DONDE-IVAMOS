@@ -12,14 +12,22 @@ export interface ItineraryResponse {
 }
 
 export enum Region {
-  NORTH_AMERICA = 'Norte América',
-  SOUTH_AMERICA = 'La Nueva Sur América',
-  BOTH = 'Ambas Américas'
+  NORTH_AMERICA = 'Norteamérica',
+  SOUTH_AMERICA = 'Suramérica',
+  EUROPE = 'Europa',
+  ASIA = 'Asia',
+  AFRICA = 'África',
+  OCEANIA = 'Oceanía',
+  MIDDLE_EAST = 'Medio Oriente',
+  BOTH_AMERICAS = 'Ambas Américas'
 }
 
 export interface TravelPreferences {
   region: Region;
+  country: string;
+  state: string;
+  town: string;
   duration: number;
   style: 'Luxury' | 'Adventure' | 'Cultural' | 'Gourmet';
-  enthusiasm: number; // For that "1000000000 stars" vibe
+  enthusiasm: number;
 }

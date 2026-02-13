@@ -6,10 +6,14 @@ import Hero from './components/Hero';
 import PreferencesForm from './components/PreferencesForm';
 import ItineraryDisplay from './components/ItineraryDisplay';
 import WellnessPackage from './components/WellnessPackage';
+import Dashboard from './components/Dashboard';
 
 const App: React.FC = () => {
   const [preferences, setPreferences] = useState<TravelPreferences>({
     region: Region.BOTH,
+    country: '',
+    state: '',
+    town: '',
     duration: 15,
     style: 'Luxury',
     enthusiasm: 1000000000
@@ -20,7 +24,14 @@ const App: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const phoneNumber = "+573239157120";
-  const whatsappLink = `https://wa.me/${phoneNumber.replace('+', '')}?text=Hola!%20Deseo%20reservar%20mi%20viaje%20con%20Donde%20vamos.`;
+  const rawPhoneNumber = "573239157120";
+  const crmEmail = "maurodestinodeveloper@gmail.com";
+  
+  const handleHeaderBooking = () => {
+    const msg = "Hola! ✨ Deseo reservar un viaje de lujo con Donde vamos. Por favor, asísteme con mi itinerario.";
+    window.open(`https://wa.me/${rawPhoneNumber}?text=${encodeURIComponent(msg)}`, "_blank");
+    console.log(`[CRM] Intento de reserva desde header notificado a ${crmEmail}`);
+  };
 
   const handleGenerate = async () => {
     setLoading(true);
@@ -28,6 +39,10 @@ const App: React.FC = () => {
     try {
       const data = await generateItinerary(preferences);
       setItinerary(data);
+      
+      // Simular registro en CRM
+      console.log(`[CRM] Registro de itinerario para: ${preferences.town || preferences.state || preferences.country || preferences.region}`);
+      
       setTimeout(() => {
         const element = document.getElementById('itinerary-results');
         if (element) {
@@ -52,6 +67,7 @@ const App: React.FC = () => {
           <a href="#" className="hover:text-white transition-colors">ITINERARIOS</a>
           <a href="#" className="hover:text-white transition-colors">DESTINOS</a>
           <a href="#referral-program" className="hover:text-white transition-colors uppercase text-xs tracking-widest text-indigo-400">Partners</a>
+          <a href="#dashboard-sec" className="hover:text-white transition-colors uppercase text-xs tracking-widest text-emerald-400">Dashboard</a>
         </nav>
         <div className="flex items-center gap-4">
           <a 
@@ -60,14 +76,12 @@ const App: React.FC = () => {
           >
             {phoneNumber}
           </a>
-          <a 
-            href={whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button 
+            onClick={handleHeaderBooking}
             className="bg-white text-slate-900 px-5 py-2 rounded-full text-sm font-bold hover:bg-indigo-100 transition-colors shadow-lg active:scale-95 transform"
           >
             RESERVAR AHORA
-          </a>
+          </button>
         </div>
       </header>
 
@@ -109,6 +123,10 @@ const App: React.FC = () => {
             <ItineraryDisplay data={itinerary} />
           </div>
 
+          <div id="dashboard-sec">
+            <Dashboard />
+          </div>
+
           <WellnessPackage />
         </div>
       </main>
@@ -145,7 +163,7 @@ const App: React.FC = () => {
           Desarrollado con inteligencia artificial de última generación para precisión absoluta. 
           Asistencia inmediata al <span className="text-indigo-400 font-bold">{phoneNumber}</span>.
           <br/>
-          <span className="opacity-50 text-[10px]">Fuentes: Búsqueda en tiempo real via Gemini AI.</span>
+          <span className="opacity-50 text-[10px]">Fuentes: Búsqueda en tiempo real via Gemini AI. Notificaciones registradas en {crmEmail}.</span>
         </p>
       </footer>
     </div>

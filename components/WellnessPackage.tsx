@@ -1,15 +1,22 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 
 const WellnessPackage: React.FC = () => {
-  const paypalLink = "https://paypal.me/Maurodeveloper1";
+  const [showModal, setShowModal] = useState(false);
+  const phoneNumber = "573239157120";
   const crmEmail = "maurodestinodeveloper@gmail.com";
+  const packageName = "MANATURY";
 
-  const handleBookingClick = () => {
-    // Simulated CRM Notification logic as requested
-    console.log(`Enviando notificación ceremonial a ${crmEmail}...`);
-    // In a real app, this would be an API call to a backend or a service like EmailJS
-    alert("¡Portal Manatury Abierto! Notificación enviada a nuestro CRM Elite. Redirigiendo a tu reserva segura.");
+  const handleReservar = () => {
+    // 1. Abrir WhatsApp con mensaje personalizado
+    const mensaje = `Hola! ✨ Deseo reservar mi experiencia memorable con el Paquete ${packageName}. Por favor, bríndame más información.`;
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(mensaje)}`, "_blank");
+
+    // 2. Simular envío a CRM/Email (Notificación Ceremonial)
+    console.log(`[CRM] Notificación enviada a ${crmEmail} para el paquete ${packageName}`);
+    
+    // 3. Mostrar Modal de Confirmación
+    setShowModal(true);
   };
 
   return (
@@ -29,7 +36,7 @@ const WellnessPackage: React.FC = () => {
               Portal de Bienestar Ritualizado
             </span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-2 tracking-tighter uppercase">
-              PAQUETE <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-500">MANATURY</span>
+              PAQUETE <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-500">{packageName}</span>
             </h2>
             <p className="text-xl md:text-2xl font-bold text-indigo-300 tracking-[0.2em] mb-6 uppercase">
               Crea tu experiencia memorable
@@ -75,22 +82,44 @@ const WellnessPackage: React.FC = () => {
           </div>
 
           <div className="flex flex-col items-center gap-6">
-            <a 
-              href={paypalLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={handleBookingClick}
+            <button 
+              onClick={handleReservar}
               className="group relative inline-flex items-center justify-center px-12 py-5 font-bold text-white transition-all duration-200 bg-gradient-to-r from-purple-600 to-indigo-600 font-pj rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 shadow-2xl hover:scale-105 active:scale-95"
             >
               <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-purple-400 to-indigo-400 opacity-0 group-hover:opacity-20 rounded-full blur-xl transition-opacity"></span>
-              RESERVAR MANATURY AHORA
-            </a>
+              RESERVAR {packageName} AHORA
+            </button>
             <p className="text-slate-500 text-xs font-bold tracking-widest uppercase">
-              Notificación automática a: {crmEmail}
+              Trazabilidad activa vía: {crmEmail}
             </p>
           </div>
         </div>
       </div>
+
+      {/* Modal de Confirmación Ceremonial */}
+      {showModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
+          <div className="glass max-w-md w-full p-8 rounded-3xl border border-indigo-500/30 text-center shadow-2xl transform animate-scale-up">
+            <div className="w-20 h-20 bg-indigo-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-indigo-500/50">
+              <span className="text-4xl">✨</span>
+            </div>
+            <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-tighter">Reserva Iniciada</h3>
+            <p className="text-slate-300 mb-6 font-light">
+              Tu experiencia <strong className="text-indigo-400">{packageName}</strong> está siendo procesada. Hemos abierto tu portal de comunicación y notificado a nuestro equipo elite.
+            </p>
+            <div className="space-y-3 mb-8 text-left text-sm bg-white/5 p-4 rounded-2xl border border-white/5">
+              <p className="flex justify-between"><span className="text-slate-500">WhatsApp:</span> <span className="text-indigo-300 font-mono">+{phoneNumber}</span></p>
+              <p className="flex justify-between"><span className="text-slate-500">Notificación:</span> <span className="text-indigo-300">Enviada a CRM</span></p>
+            </div>
+            <button 
+              onClick={() => setShowModal(false)}
+              className="w-full bg-white text-slate-950 font-black py-4 rounded-2xl hover:bg-indigo-100 transition-colors uppercase tracking-widest text-sm"
+            >
+              Continuar Explorando
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
